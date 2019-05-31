@@ -11,7 +11,7 @@ import time
 options = Options()
 options.binary_location = '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary'
 options.add_argument('--headless')
-driver = webdriver.Chrome(chrome_options=options)
+driver = webdriver.Chrome(options=options)
 
 driver.get('https://ameblo.jp/juicejuice-official/imagelist-201905.html')
 
