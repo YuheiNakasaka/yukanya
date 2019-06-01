@@ -130,3 +130,5 @@ face_images/*
 haarcascades/*
 members/*
 test/*
+YukanyaModel.h5
+YukanyaModel.json
