@@ -6,6 +6,7 @@ from scipy import ndimage
 
 def create_angle_image(img, base_membar_dir, basename, ext, suffix):
     for angle in [-10, 0, 10]:
+        img = cv2.resize(img, (200, 200))
         # 回転
         rotate_img = ndimage.rotate(img, angle)
         angle_file_path = os.path.join(base_membar_dir, basename + '_' + str(angle) + '_' + suffix + ext)
@@ -38,13 +39,14 @@ for member in members:
       basename, ext = os.path.splitext(filename)
       filepath = base_membar_dir + '/' + filename
       img = cv2.imread(filepath)
+      img = cv2.resize(img, (200, 200))
 
       # コントラスト調整
       min_table = 50
       max_table = 205
       diff_table = max_table - min_table
-      LUT_HC = np.arange(256, dtype = 'uint8' )
-      LUT_LC = np.arange(256, dtype = 'uint8' )
+      LUT_HC = np.arange(256, dtype = 'uint8')
+      LUT_LC = np.arange(256, dtype = 'uint8')
       for i in range(0, min_table):
           LUT_HC[i] = 0
       for i in range(min_table, max_table):

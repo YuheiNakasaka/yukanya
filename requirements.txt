@@ -1,3 +1,5 @@
 selenium
 chromedriver-binary
 beautifulsoup4
+tensorflow
+keras
