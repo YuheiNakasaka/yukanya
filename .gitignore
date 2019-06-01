@@ -126,3 +126,5 @@ dmypy.json
 
 # custom
 dl_images/*
+face_images/*
+haarcascades/*
