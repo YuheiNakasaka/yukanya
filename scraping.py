@@ -16,7 +16,7 @@ driver = webdriver.Chrome(options=options)
 
 year = 2019
 month = 5
-i = 24 # 2年分
+i = 60 # 5年分
 while i > 0:
     url = 'https://ameblo.jp/juicejuice-official/imagelist-' + str(year) + str(month).rjust(2, "0") + '.html'
     print('Link: ' + url)
