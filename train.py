@@ -58,7 +58,7 @@ model.add(Activation('softmax'))
 model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # 学習
-history = model.fit(X_train, y_train, batch_size=70, epochs=1, verbose=1, validation_data=(X_test, y_test))
+history = model.fit(X_train, y_train, batch_size=70, epochs=40, verbose=1, validation_data=(X_test, y_test))
 
 #モデルを保存
 model_json = model.to_json()

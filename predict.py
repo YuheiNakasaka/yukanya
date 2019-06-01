@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
 import os
+import sys
+import re
 from keras.models import Sequential, model_from_json
 from keras.models import Sequential
 from keras.layers.convolutional import Conv2D
@@ -16,7 +18,11 @@ import matplotlib.pyplot as plt
 
 def main():
     #画像パス
-    img_path = './sample_yukanya.jpg'
+    if not (len(sys.argv) == 2 and re.match('.+\.(jpg|jpeg|png)', sys.argv[1])):
+        print('Error: set image path.')
+        return False
+
+    img_path = sys.argv[1]
     #モデルパス
     model_path = "YukanyaModel.json"
     #重みパス
@@ -49,7 +55,7 @@ def main():
 
     imgarray = []
     imgarray.append(img_to_array(face_img))
-    imgarray = np.array(imgarray) / 255
+    imgarray = np.array(imgarray)
     imgarray.astype('float32')
 
     #モデルの読み込み
