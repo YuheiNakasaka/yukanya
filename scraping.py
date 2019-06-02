@@ -113,7 +113,7 @@ if __name__ == '__main__':
     # client = JJScraping()
     # client.from_ameba_blog(2019, 5, 60)
     client = JJScraping()
-    # client.from_google('宮崎由加', 'yukamiyazaki')
+    client.from_google('宮崎由加', 'yukamiyazaki')
     client.from_google('金澤朋子', 'tomokokanazawa')
     client.from_google('高木紗友希', 'sayukitakagi')
     client.from_google('段原瑠々', 'rurudanbara')
