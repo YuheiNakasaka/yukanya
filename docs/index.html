@@ -2,7 +2,8 @@
   <head>
     <title>Juice=Juice判定器</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.5"></script>
+    <script type="text/javascript" src="./face-api.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.1.2"></script>
   </head>
   <body>
     <div id="app">
@@ -30,12 +31,13 @@
             "tomokokanazawa",
             "yukamiyazaki"
           ]
-          tf.loadModel('./model.json').then(model => {
+
+          tf.loadLayersModel('./model.json').then(model => {
             console.log("Loaded!")
             setupCanvas('./sample.jpg', 64, 64).then((resp) => {
+              resp.context.putImageData(resp.imgData, 0, 0);
               const imgData = toGrayScale(resp.imgData, resp.width, resp.height)
-              resp.context.putImageData(imgData, 0, 0);
-              let tfObj = tf.fromPixels(resp.imgData)
+              let tfObj = tf.browser.fromPixels(imgData)
               tfObj = tfObj.reshape([1, 64, 64, 3])
               tf.tidy(() => {
                 const prediction = model.predict(tfObj)
@@ -55,6 +57,13 @@
         }
       });
 
+      async function faceDetect(canvas) {
+        await faceapi.nets.ssdMobilenetv1.load('/')
+        const options = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 })
+        const detections = await faceapi.detectSingleFace(canvas, options)
+        return detections
+      }
+
       function setupCanvas(imgUrl, resizeW, resizeH) {
         const canvas = document.querySelector('#mainCanvas');
         if (!canvas) return null;
@@ -64,11 +73,12 @@
           const img = new Image();
           img.crossOrigin = "Anonymous";
           img.src = imgUrl;
-          img.onload = () => {
+          img.onload = async () => {
             context.clearRect(0, 0, img.width, img.height);
+            const detections = await faceDetect(img)
             canvas.width = resizeW;
             canvas.height = resizeH;
-            context.drawImage(img, 0, 0, img.width, img.height, 0, 0, resizeW, resizeH);
+            context.drawImage(img, detections.box.x, detections.box.y, detections.box.width, detections.box.height, 0, 0, resizeW, resizeH);
             const imgData = context.getImageData(0, 0, canvas.width, canvas.height);
             resolve({
               canvas: canvas,
