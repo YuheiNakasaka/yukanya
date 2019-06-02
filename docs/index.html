@@ -128,7 +128,7 @@
       });
 
       async function faceDetect(canvas) {
-        await faceapi.nets.ssdMobilenetv1.load('/')
+        await faceapi.nets.ssdMobilenetv1.loadFromUri('./')
         const options = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 })
         const detections = await faceapi.detectSingleFace(canvas, options) 
         return detections
