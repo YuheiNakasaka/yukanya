@@ -130,6 +130,7 @@ face_images/*
 haarcascades/*
 members/*
 test/*
-YukanyaModel.h5
-YukanyaModel.json
+dl_gimages/*
+face_gimages/*
+YukanyaModel*
 sample_yukanya.jpg

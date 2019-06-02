@@ -19,7 +19,6 @@ members = [
   "yukamiyazaki"
 ]
 member_base_dir = "members"
-test_base_dir = "test"
 
 # 訓練
 X_train = []
@@ -58,12 +57,12 @@ model.add(Activation('softmax'))
 model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # 学習
-history = model.fit(X_train, y_train, batch_size=70, epochs=40, verbose=1, validation_data=(X_test, y_test))
+history = model.fit(X_train, y_train, batch_size=70, epochs=100, verbose=1, validation_data=(X_test, y_test))
 
 #モデルを保存
 model_json = model.to_json()
-open('YukanyaModel.json', 'w').write(model_json)
-model.save_weights("YukanyaModel.h5")
+open('YukanyaModel_google_ameba.json', 'w').write(model_json)
+model.save_weights("YukanyaModel_google_ameba.h5")
 
 # 汎化制度の評価・表示
 score = model.evaluate(X_test, y_test, batch_size=32, verbose=0)

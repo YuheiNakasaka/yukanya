@@ -39,7 +39,7 @@ for member in members:
       basename, ext = os.path.splitext(filename)
       filepath = base_membar_dir + '/' + filename
       img = cv2.imread(filepath)
-      img = cv2.resize(img, (200, 200))
+      img = cv2.resize(img, (64, 64))
 
       # コントラスト調整
       min_table = 50
@@ -69,6 +69,6 @@ for member in members:
 
       # 回転版
       create_angle_image(img, base_membar_dir, basename, ext, 'normal')
-      create_angle_image(hflip_img, base_membar_dir, basename, ext, 'hflip')
-      create_angle_image(high_cont_img, base_membar_dir, basename, ext, 'highcont')
-      create_angle_image(low_cont_img, base_membar_dir, basename, ext, 'lowcont')
+      # create_angle_image(hflip_img, base_membar_dir, basename, ext, 'hflip')
+      # create_angle_image(high_cont_img, base_membar_dir, basename, ext, 'highcont')
+      # create_angle_image(low_cont_img, base_membar_dir, basename, ext, 'lowcont')
