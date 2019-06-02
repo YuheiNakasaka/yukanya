@@ -24,6 +24,12 @@ python facecliping.py
 ```
 
 ## 3) 学習データを水増し
+下記を生成する
+
+- 通常画像/コントラストを上げた画像/コントラストを下げた画像/左右反転した画像の
+  - 回転画像
+  - ガウシアン
+  - 閾値
 
 ```
 python increase_data.py
@@ -39,4 +45,12 @@ python train.py
 
 ```
 python predict.py <適当に拾ってきたメンバーの画像のパス>
+```
+
+# Tensorflow.jsで動かす
+## 既存のモデルをweb用に変換する
+[tfjs-converter](https://github.com/tensorflow/tfjs-converter)のREADMEに則ってインストールする
+
+```
+tensorflowjs_converter --input_format keras YukanyaModel_google_ameba.h5 ./
 ```
