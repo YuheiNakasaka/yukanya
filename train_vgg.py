@@ -4,12 +4,11 @@ import os
 import re
 import matplotlib.pyplot as plt
 from keras.utils.np_utils import to_categorical
-from keras.layers import Activation, Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Input, GlobalAveragePooling2D
+from keras.layers import Activation, Dense, Dropout, Flatten, Input
 from keras.models import Sequential, Model
 from keras.preprocessing.image import img_to_array, load_img
 from sklearn.model_selection import train_test_split
 from keras.applications.vgg19 import VGG19
-from keras.optimizers import SGD
 
 members = [
   "akariuemura",
