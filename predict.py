@@ -73,7 +73,7 @@ def main():
         data = {
             'images': face_img.tolist()
         }
-        API_URL = 'http://localhost:8080'#'https://rocky-sands-87995.herokuapp.com/' #'http://localhost:8080'
+        API_URL = 'http://localhost:8080' #'https://rocky-sands-87995.herokuapp.com/'
         res = requests.post(API_URL, json=data)
         json = res.json()
         pred = json.get('data')

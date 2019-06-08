@@ -44,7 +44,7 @@ python train.py
 ## 5) 予測する
 
 ```
-python predict.py <適当に拾ってきたメンバーの画像のパス>
+python predict.py <適当に拾ってきたメンバーの画像のパス> local
 ```
 
 # Tensorflow.jsで動かす
