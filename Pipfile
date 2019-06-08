@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+verify_ssl = true
+url = "https://pypi.org/simple"
+
+[packages]
+selenium = "*"
+chromedriver-binary = "*"
+beautifulsoup4 = "*"
+tensorflow = "*"
+keras = "*"
+numpy = "*"
+opencv-python = "*"
+matplotlib = "*"
+requests = "*"
+
+[requires]
+python_version = "3.6.8"
+
+[dev-packages]
+
+[scripts]
+dev = 'python app.py'

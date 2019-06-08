@@ -5,8 +5,8 @@ import sys
 import re
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array
-from PIL import Image
 import matplotlib.pyplot as plt
+import requests
 
 def member_to_name(member):
     if member == "akariuemura":
@@ -25,10 +25,11 @@ def member_to_name(member):
         return "宮崎由加"
 
 def main():
-    if not (len(sys.argv) == 2 and re.match('.+\.(jpg|jpeg|png)', sys.argv[1])):
-        print('Error: set image path.')
+    if not (len(sys.argv) == 3 and re.match('.+\.(jpg|jpeg|png)', sys.argv[1])):
+        print('Error: set image path or set (local or api) mode')
         return False
 
+    mode = sys.argv[2]
     img_path = sys.argv[1]
     model_path = "YukanyaModel_vgg_all.h5"
     label = [
@@ -61,29 +62,42 @@ def main():
                 face_data.append(face)
 
     print('Face: ', len(face_data))
-    for face_img in face_data:
-        cv2.imshow('main', face_img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
+    if mode == 'api':
+        print('API mode')
         # grayscaleを3チャンネルへ
+        face_img = face_data[0]
         org = np.dstack((face_img, face_img))
         org = np.dstack((org, face_img))
         face_img = org
 
-        imgarray = []
-        imgarray.append(img_to_array(face_img) / 255)
-        imgarray = np.array(imgarray)
-        model = load_model(model_path)
-        model.compile(loss='categorical_crossentropy', optimizer='SGD', metrics=['accuracy'])
+        data = {
+            'images': face_img.tolist()
+        }
+        API_URL = 'http://localhost:8080'#'https://rocky-sands-87995.herokuapp.com/' #'http://localhost:8080'
+        res = requests.post(API_URL, json=data)
+        json = res.json()
+        pred = json.get('data')
+        print(pred)
+    else:
+        print('local mode')
+        for face_img in face_data[:1]:
+            # grayscaleを3チャンネルへ
+            org = np.dstack((face_img, face_img))
+            org = np.dstack((org, face_img))
+            face_img = org
 
-        y_pred = model.predict(imgarray)
-        sorted_results = []
-        for i, score in enumerate(y_pred[0]):
-            sorted_results.append([score *  100, member_to_name(label[i])])
-        sorted_results.sort()
-        for result in sorted_results[::-1]:
-            print(result[1] + ': ' + str(result[0]) + '%')
+            img_list = []
+            img_list.append(img_to_array(face_img) / 255)
+            img_list = np.array(img_list, dtype=np.float32)
+
+            model = load_model(model_path)
+            y_pred = model.predict(img_list)
+            sorted_results = []
+            for i, score in enumerate(y_pred[0]):
+                sorted_results.append([score *  100, member_to_name(label[i])])
+            sorted_results.sort()
+            for result in sorted_results[::-1]:
+                print(result[1] + ': ' + str(result[0]) + '%')
 
 if __name__ == '__main__':
     main()
